@@ -4,7 +4,7 @@ import socket
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("192.168.87.223", 1234))
+s.connect(("192.168.249.189", 1234))
 msg = s.recv(1)
 print(int.from_bytes(msg, "little"))
 while True:

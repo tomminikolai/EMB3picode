@@ -5,8 +5,8 @@ import socket
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(("192.168.249.189", 1234))
-msg = s.recv(1)
-print(int.from_bytes(msg, "little"))
+msg = s.recv(1024)
+print(msg.decode("utf-8"))
 while True:
     pass
 try:

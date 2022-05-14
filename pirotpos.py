@@ -25,16 +25,11 @@ while running:
     try:
         startmsg = ser.read(1)
         if startmsg == b'\x0F':
-            d1 = int.from_bytes(ser.read(2), "big", signed=True)
-            mtr1 += d1
+            msg = ser.read(2)
         elif startmsg == b'\xF0':
-            d2 = int.from_bytes(ser.read(2), "big", signed=True)
-            mtr2 += d2
-        tc = time.time()
-        if tc - to > 0.5:
-            clientsocket.send(mtr1.to_bytes(4, "big"))
-            clientsocket.send(mtr2.to_bytes(4, "big"))
-            to = tc
+            msg = ser.read(2)
+        clientsocket.send(startmsg)
+        clientsocket.send(msg)
     except KeyboardInterrupt:
         running = False
 ser.close()

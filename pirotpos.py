@@ -9,8 +9,6 @@ s.listen(5)
 clientsocket, address = s.accept()
 print(f"connection from {address} has been achieved")
 clientsocket.send(b'\x0F')
-while True:
-    pass
 try:
     ser = serial.Serial("COM3")
 except serial.serialutil.SerialException:
@@ -34,7 +32,8 @@ while running:
             mtr2 += d2
         tc = time.time()
         if tc - to > 0.5:
-            print(mtr1, mtr2)
+            clientsocket.send(mtr1.to_bytes(4, "big"))
+            clientsocket.send(mtr2.to_bytes(4, "big"))
             to = tc
     except KeyboardInterrupt:
         running = False

@@ -28,9 +28,9 @@ while running:
     try:
         startmsg = ser.read(1)
         if startmsg == b'\x0F':
-            mtr1 += ser.read(2)
+            mtr1 += int.from_bytes(ser.read(2), "big", signed=True)
         elif startmsg == b'\xF0':
-            mtr2 += ser.read(2)
+            mtr2 += int.from_bytes(ser.read(2), "big", signed=True)
         if i >= 10:
             i = 0
             theta += (mtr1 - mtr2) / 12

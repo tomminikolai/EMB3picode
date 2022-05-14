@@ -9,7 +9,7 @@ s.listen(5)
 while True:
     clientsocket, address = s.accept()
     print(f"connection from {address} has been achieved")
-    clientsocket.send(bytes("Welcome", "utf-8"))
+    clientsocket.send(b'\x0F')
 while True:
     pass
 try:

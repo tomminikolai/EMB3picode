@@ -1,6 +1,14 @@
 import serial
 import time
+import socket
 
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(("192.168.87.223", 1234))
+msg = s.recv(1)
+print(int.from_bytes(msg, "little"))
+while True:
+    pass
 try:
     ser = serial.Serial("COM3")
 except serial.serialutil.SerialException:

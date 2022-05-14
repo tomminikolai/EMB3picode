@@ -28,8 +28,9 @@ while running:
             msg = ser.read(2)
         elif startmsg == b'\xF0':
             msg = ser.read(2)
-        clientsocket.send(startmsg)
-        clientsocket.send(msg)
+        if startmsg:
+            clientsocket.send(startmsg)
+            clientsocket.send(msg)
     except KeyboardInterrupt:
         running = False
 ser.close()

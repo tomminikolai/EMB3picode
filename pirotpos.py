@@ -42,6 +42,8 @@ while running:
             dy = ((mtr1 + mtr2) / 2) * math.sin(theta)
             pos[0] += dx
             pos[1] += dy
+            dx = 0
+            dy = 0
             mtr1 = 0
             mtr2 = 0
         clientsocket.send(int(pos[0]).to_bytes(4, "big"))

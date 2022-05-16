@@ -14,7 +14,7 @@ try:
 except serial.serialutil.SerialException:
     print("not com3")
 try:
-    ser = serial.Serial("/dev/ttyUSB0", timeout=0.25)
+    ser = serial.Serial("/dev/ttyUSB0")
 except serial.serialutil.SerialException:
     print("not com5")
 mtr1 = 0

@@ -46,8 +46,6 @@ while running:
         clientsocket.send(int(pos[1]).to_bytes(4, "big"))
         vl = int.from_bytes(clientsocket.recv(2), "big", signed=True)
         vr = int.from_bytes(clientsocket.recv(2), "big", signed=True)
-        if time.time() - to > 1:
-            print(vl, vr)
         i += 1
     except KeyboardInterrupt:
         running = False

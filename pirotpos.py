@@ -27,18 +27,28 @@ vl = 0
 vr = 0
 vlo = 0
 vro = 0
-dx = 0
-dy = 0
 running = True
 while running:
     try:
         startmsg = ser.read(1)
         if startmsg == b'\x0F':
-            dx = int.from_bytes(ser.read(2), "big", signed=True)
+            mtr1 += int.from_bytes(ser.read(2), "big", signed=True)
         elif startmsg == b'\xF0':
-            dy = int.from_bytes(ser.read(2), "big", signed=True)
-        clientsocket.send(int(dx).to_bytes(2, "big", signed=True))
-        clientsocket.send(int(dy).to_bytes(2, "big", signed=True))
+            mtr2 += int.from_bytes(ser.read(2), "big", signed=True)
+        if i >= 10:
+            i = 0
+            theta += (mtr1 - mtr2) / 12
+            dx = ((mtr1 + mtr2) / 2) * math.cos(theta)
+            dy = ((mtr1 + mtr2) / 2) * math.sin(theta)
+            print(dx, dy)
+            pos[0] += dx
+            pos[1] += dy
+            dx = 0
+            dy = 0
+            mtr1 = 0
+            mtr2 = 0
+        clientsocket.send(int(pos[0]).to_bytes(4, "big"))
+        clientsocket.send(int(pos[1]).to_bytes(4, "big"))
         vl = int.from_bytes(clientsocket.recv(2), "big", signed=True)
         vr = int.from_bytes(clientsocket.recv(2), "big", signed=True)
         i += 1

@@ -25,6 +25,8 @@ pos = [750, 500]
 theta = 0
 vl = 0
 vr = 0
+vlo = 0
+vro = 0
 running = True
 while running:
     try:
@@ -47,6 +49,8 @@ while running:
         vl = int.from_bytes(clientsocket.recv(2), "big", signed=True)
         vr = int.from_bytes(clientsocket.recv(2), "big", signed=True)
         i += 1
+        if vl != vlo or vr != vro:
+            print(vl, vr)
     except KeyboardInterrupt:
         running = False
 ser.close()

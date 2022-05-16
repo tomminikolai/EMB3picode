@@ -14,7 +14,7 @@ try:
 except serial.serialutil.SerialException:
     print("not com3")
 try:
-    ser = serial.Serial("/dev/ttyUSB0")
+    ser = serial.Serial("/dev/ttyUSB0", timeout=0.25)
 except serial.serialutil.SerialException:
     print("not com5")
 mtr1 = 0
@@ -40,6 +40,7 @@ while running:
             theta += (mtr1 - mtr2) / 12
             dx = ((mtr1 + mtr2) / 2) * math.cos(theta)
             dy = ((mtr1 + mtr2) / 2) * math.sin(theta)
+            print(mtr1, mtr2)
             print(dx, dy)
             pos[0] += dx
             pos[1] += dy

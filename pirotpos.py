@@ -38,6 +38,7 @@ while running:
         if i >= 10:
             i = 0
             theta += (mtr1 - mtr2) / 12
+            print(dx, dy)
             dx = ((mtr1 + mtr2) / 2) * math.cos(theta)
             dy = ((mtr1 + mtr2) / 2) * math.sin(theta)
             pos[0] += dx

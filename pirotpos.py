@@ -23,6 +23,8 @@ to = 0
 i = 0
 pos = [750, 500]
 theta = 0
+vl = 0
+vr = 0
 running = True
 while running:
     try:
@@ -38,10 +40,14 @@ while running:
             dy = ((mtr1 + mtr2) / 2) * math.sin(theta)
             pos[0] += dx
             pos[1] += dy
-            clientsocket.send(int(pos[0]).to_bytes(4, "big"))
-            clientsocket.send(int(pos[1]).to_bytes(4, "big"))
             mtr1 = 0
             mtr2 = 0
+        clientsocket.send(int(pos[0]).to_bytes(4, "big"))
+        clientsocket.send(int(pos[1]).to_bytes(4, "big"))
+        vl = int.from_bytes(clientsocket.recv(2), "big", signed=True)
+        vr = int.from_bytes(clientsocket.recv(2), "big", signed=True)
+        if time.time() - to > 1:
+            print(vl, vr)
         i += 1
     except KeyboardInterrupt:
         running = False

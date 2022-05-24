@@ -46,8 +46,8 @@ while running:
             dy = 0
             mtr1 = 0
             mtr2 = 0
-        clientsocket.send(int(pos[0]).to_bytes(4, "big"))
-        clientsocket.send(int(pos[1]).to_bytes(4, "big"))
+        clientsocket.send(int(pos[0]).to_bytes(4, "big", signed=True))
+        clientsocket.send(int(pos[1]).to_bytes(4, "big", signed=True))
         vl = int.from_bytes(clientsocket.recv(2), "big", signed=True)
         vr = int.from_bytes(clientsocket.recv(2), "big", signed=True)
         i += 1

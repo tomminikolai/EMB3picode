@@ -31,21 +31,22 @@ running = True
 while running:
     try:
         ser.write(b'\x0F')
-        mtr1 += int.from_bytes(ser.read(2), "big", signed=True)
-        mtr2 += int.from_bytes(ser.read(2), "big", signed=True)
-        if i >= 10:
-            i = 0
-            theta += (mtr1 - mtr2) / 12
-            dx = ((mtr1 + mtr2) / 2) * math.cos(theta)
-            dy = ((mtr1 + mtr2) / 2) * math.sin(theta)
-            print(mtr1, mtr2)
-            print(dx, dy)
-            pos[0] += dx
-            pos[1] += dy
-            dx = 0
-            dy = 0
-            mtr1 = 0
-            mtr2 = 0
+        if ser.read(1) == b'\xF0':
+            mtr1 += int.from_bytes(ser.read(2), "big", signed=True)
+            mtr2 += int.from_bytes(ser.read(2), "big", signed=True)
+            if i >= 10:
+                i = 0
+                theta += (mtr1 - mtr2) / 12
+                dx = ((mtr1 + mtr2) / 2) * math.cos(theta)
+                dy = ((mtr1 + mtr2) / 2) * math.sin(theta)
+                print(mtr1, mtr2)
+                print(dx, dy)
+                pos[0] += dx
+                pos[1] += dy
+                dx = 0
+                dy = 0
+                mtr1 = 0
+                mtr2 = 0
         clientsocket.send(int(pos[0]).to_bytes(4, "big", signed=True))
         clientsocket.send(int(pos[1]).to_bytes(4, "big", signed=True))
         vl = int.from_bytes(clientsocket.recv(2), "big", signed=True)
